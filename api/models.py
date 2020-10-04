@@ -3,13 +3,13 @@ import json
 
 class Model:
 
-    _model = None
+    _data = None
 
 
 class Register(Model):
 
     def __init__(self, username, password):
-        self._model = json.dumps(
+        self._data = json.dumps(
             {
                 "username": username,
                 "password": password
@@ -17,13 +17,13 @@ class Register(Model):
         )
 
     def __call__(self):
-        return self._model
+        return self._data
 
 
 class Login(Model):
 
     def __init__(self, username, password):
-        self._model = json.dumps(
+        self._data = json.dumps(
             {
                 "username": username,
                 "password": password
@@ -31,31 +31,31 @@ class Login(Model):
         )
 
     def __call__(self):
-        return self._model
+        return self._data
 
 
 class Logout(Model):
 
     def __init__(self, username):
-        self._model = json.dumps(
+        self._data = json.dumps(
             {
                 "username": username
             }
         )
 
     def __call__(self):
-        return self._model
+        return self._data
 
 
 class Add(Model):
 
     def __init__(self, quantity):
-        self._model = json.dumps(
+        self._data = json.dumps(
             {
                 "quantity": quantity
             }
         )
 
     def __call__(self):
-        return self._model
+        return self._data
 
