@@ -51,7 +51,7 @@ class BaseUiTest(softest.TestCase):
     logger = logging.getLogger(__name__)
 
     __ui_base_url = UiConfig().get_ui_base_url()
-    __driver = ''
+    __driver = None
 
     USERNAME = 'username'
     PASSWORD = 'password'
