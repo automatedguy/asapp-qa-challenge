@@ -1,3 +1,6 @@
+from time import sleep
+
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -8,6 +11,9 @@ class PageElement(object):
     __locator = None
     __driver = None
     __element = None
+
+    MAX_RETRY = 30
+    MAX_WAIT = 3
 
     def __init__(self, driver, locator):
         self.__driver = driver
@@ -26,9 +32,16 @@ class PageElement(object):
         return self.__element.is_displayed()
 
     def _wait_for_element(self, locator):
-        element = WebDriverWait(self.__driver, 10).until(
-            EC.element_to_be_clickable((By.XPATH, locator))
-        )
+        count = 0
+        element = None
+        while count < self.MAX_RETRY and element is None:
+            try:
+                element = WebDriverWait(self.__driver, self.MAX_RETRY).until(
+                    EC.element_to_be_clickable((By.XPATH, locator))
+                )
+            except StaleElementReferenceException:
+                sleep(self.MAX_WAIT)
+                count += 1
         return element
 
 
