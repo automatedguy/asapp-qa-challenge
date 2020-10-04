@@ -1,37 +1,63 @@
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
+
 
 class PageElement(object):
 
-    __locator = ''
+    __locator = None
     __driver = None
     __element = None
 
-    def __init__(self, locator, driver):
-        self.__locator = locator
+    def __init__(self, driver, locator):
         self.__driver = driver
-
-    def __call__(self):
-        self.__element = self.__driver.find_element_by_xpath(self.__locator)
+        self.__locator = locator
 
     def click(self):
+        self.__element = self._wait_for_element(self.__locator)
         self.__element.click()
 
     def set_text(self, text):
+        self.__element = self._wait_for_element(self.__locator)
         self.__element.send_keys(text)
+
+    def is_visible(self):
+        self.__element = self._wait_for_element(self.__locator)
+        return self.__element.is_displayed()
+
+    def _wait_for_element(self, locator):
+        element = WebDriverWait(self.__driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, locator))
+        )
+        return element
 
 
 class LoginPageLocators(object):
 
-    USERNAME_INPUT = ''
-    PASSWORD_INPUT = ''
-    LOGIN_BUTTON = ''
-    REGISTER_BUTTON = ''
+    USERNAME_INPUT = '//input[@id="username"]'
+    PASSWORD_INPUT = '//input[@id="password"]'
+    LOGIN_BUTTON = '//span[@class="MuiButton-label" and text()="Log In"]/ancestor::button'
+    REGISTER_BUTTON = '//span[@class="MuiButton-label" and text()="Register"]/ancestor::button'
+
+
+class RegisterPageLocators(object):
+
+    USERNAME_INPUT = '//input[@id="register-username"]'
+    PASSWORD_INPUT = '//input[@id="register-password"]'
+    REGISTER_BUTTON = '(//span[@class="MuiButton-label" and text()="Register"])[2]/ancestor::button'
+
+
+class IncorrectCredentialsPopUpLocators(object):
+
+    INCORRECT_CREDENTIALS_MESSAGE = ''
+    CLOSE_BUTTON = ''
 
 
 class AppBarLocators(object):
 
-    STORE_TAB = ''
-    CART_TAB = ''
-    LOG_OUT_TAB = ''
+    STORE_TAB = '//span[@class="MuiTab-wrapper" and text()="Store"]/ancestor::button'
+    CART_TAB = '//span[@class="MuiTab-wrapper" and text()="Cart"]/ancestor::button'
+    LOG_OUT_TAB = '//span[@class="MuiTab-wrapper" and text()="Log Out"]/ancestor::button'
 
 
 class ProductPageLocator(object):

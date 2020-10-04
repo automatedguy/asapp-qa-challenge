@@ -1,6 +1,7 @@
 import configparser
 import logging
-import unittest
+import softest
+import random
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
@@ -24,6 +25,14 @@ class ApiConfig(TestConfig):
         return _PROTOCOL_ + '://' + self._api_url + ':' + self._api_port
 
 
+class BaseApiTest(softest.TestCase):
+
+    logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
+    logger = logging.getLogger(__name__)
+
+    __ui_base_url = ApiConfig().get_api_base_url()
+
+
 class UiConfig(TestConfig):
 
     def __init__(self):
@@ -34,13 +43,16 @@ class UiConfig(TestConfig):
         return _PROTOCOL_ + '://' + self._ui_url + ':' + self._ui_port
 
 
-class BaseUiTest(unittest.TestCase):
+class BaseUiTest(softest.TestCase):
 
     logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
     logger = logging.getLogger(__name__)
 
     __ui_base_url = UiConfig().get_ui_base_url()
     __driver = ''
+
+    USERNAME = 'username'
+    PASSWORD = 'password'
 
     @classmethod
     def setUpClass(cls):
@@ -68,4 +80,3 @@ class BaseUiTest(unittest.TestCase):
     def tearDown(self):
         self.logger.info('-----')
         self.get_driver().quit()
-
