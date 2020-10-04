@@ -1,7 +1,7 @@
 import configparser
 import logging
 import softest
-import random
+import os
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
@@ -11,8 +11,10 @@ _PROTOCOL_ = 'http'
 
 class TestConfig:
 
+    ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+    URL_CONFIG = os.path.join(ROOT_DIR, _URLS_INI_)
     _config = configparser.ConfigParser()
-    _config.read(_URLS_INI_)
+    _config.read(URL_CONFIG)
 
 
 class ApiConfig(TestConfig):
