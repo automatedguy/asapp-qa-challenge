@@ -14,6 +14,7 @@ class PageElement(object):
 
     MAX_RETRY = 30
     MAX_WAIT = 3
+    DELAY = 1
 
     def __init__(self, driver, locator):
         self.__driver = driver
@@ -42,6 +43,7 @@ class PageElement(object):
             except StaleElementReferenceException:
                 sleep(self.MAX_WAIT)
                 count += 1
+        sleep(self.DELAY)
         return element
 
 
