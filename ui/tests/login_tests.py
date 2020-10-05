@@ -2,13 +2,13 @@ from base.setup import BaseUiTest
 from ui.pages import LoginPage
 from api.services import AuthController
 from api.models import *
-import random
+from base.utils import get_user_id
 
 
 class LoginTests(BaseUiTest):
 
     def test_login(self):
-        username = self.USERNAME + str(random.randint(100, 1000))
+        username = self.USERNAME + get_user_id()
         password = self.PASSWORD
 
         auth_controller = AuthController()
@@ -28,7 +28,7 @@ class LoginTests(BaseUiTest):
         self.assert_all()
 
     def test_logout(self):
-        username = self.USERNAME + str(random.randint(100, 1000))
+        username = self.USERNAME + get_user_id()
         password = self.PASSWORD
 
         auth_controller = AuthController()
@@ -51,7 +51,7 @@ class LoginTests(BaseUiTest):
         self.assert_all()
 
     def test_register(self):
-        username = self.USERNAME + str(random.randint(100, 1000))
+        username = self.USERNAME + get_user_id()
         password = self.PASSWORD
 
         login_page = LoginPage(self.get_driver())

@@ -3,7 +3,10 @@ import logging
 import softest
 import os
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
+
+from base.constants import Logs
 
 _URLS_INI_ = 'urls.ini'
 _PROTOCOL_ = 'http'
@@ -69,16 +72,21 @@ class BaseUiTest(softest.TestCase):
             cls.setUp = setUpOverride
 
     def _set_chrome(self):
-        self.__driver = webdriver.Chrome(ChromeDriverManager().install())
+        self.logger.info(Logs.INSTALLING_AND_OPENING_BROWSER)
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        self.__driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
 
     def get_driver(self):
         return self.__driver
 
     def setUp(self):
         self._set_chrome()
+        self.logger.info(Logs.MAXIMIZING_WINDOW)
         self.get_driver().maximize_window()
+        self.logger.info(Logs.NAVIGATING_TO_BASE_URL + ':' + self.__ui_base_url)
         self.get_driver().get(self.__ui_base_url)
 
     def tearDown(self):
-        self.logger.info('-----')
+        self.logger.info(Logs.CLOSING_BROWSER)
         self.get_driver().quit()
