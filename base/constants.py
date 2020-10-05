@@ -18,6 +18,7 @@ class Log:
     MAXIMIZING_WINDOW = 'Maximizing window.'
     NAVIGATING_TO_BASE_URL = 'Navigating to base url.'
     CLOSING_BROWSER = 'Closing browser.'
+    STARTING_VIRTUAL_DISPLAY = 'Starting virtual display.'
 
 
 class Input:

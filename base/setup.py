@@ -3,7 +3,7 @@ import logging
 import softest
 import os
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from sys import platform
 from webdriver_manager.chrome import ChromeDriverManager
 
 from base.constants import Log
@@ -73,11 +73,7 @@ class BaseUiTest(softest.TestCase):
 
     def _set_chrome(self):
         self.__logger.info(Log.INSTALLING_AND_OPENING_BROWSER)
-        chrome_options = Options()
-        chrome_options.add_argument("--headless")
-        chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument("--disable-gpu")
-        self.__driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
+        self.__driver = webdriver.Chrome(ChromeDriverManager().install())
 
     def get_driver(self):
         return self.__driver
@@ -88,6 +84,13 @@ class BaseUiTest(softest.TestCase):
         self.get_driver().maximize_window()
         self.__logger.info(Log.NAVIGATING_TO_BASE_URL + ':' + self.__ui_base_url)
         self.get_driver().get(self.__ui_base_url)
+
+    def set_virtual_display(self):
+        if platform != 'win32':
+            self.__logger.info(Log.STARTING_VIRTUAL_DISPLAY)
+            from pyvirtualdisplay import Display
+            display = Display(visible=0, size=(800, 600))
+            display.start()
 
     def tearDown(self):
         self.__logger.info(Log.CLOSING_BROWSER)
