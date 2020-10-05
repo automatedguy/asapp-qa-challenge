@@ -81,6 +81,9 @@ class BaseUiTest(softest.TestCase):
         self.__logger.info(Log.INSTALLING_AND_OPENING_BROWSER)
         chrome_options = Options()
         chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-extensions')
+        chrome_options.add_argument('--disable-gpu')
+        chrome_options.add_argument('test-type')
         self.__driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
 
     def get_driver(self):

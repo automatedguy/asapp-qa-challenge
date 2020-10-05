@@ -15,11 +15,10 @@ RUN apt-get update && apt-get -y install google-chrome-stable
 # Install virtual display support
 RUN apt-get -y install xvfb
 
-
 COPY . .
 
 #  API
-# CMD python -m unittest /api/tests/auth_tests.py
+RUN python -m unittest /api/tests/auth_tests.py
 
 # UI
-CMD python -m unittest /ui/tests/login_tests.py
+RUN python -m unittest /ui/tests/login_tests.py
