@@ -12,6 +12,10 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key
 # Install Chrome browser
 RUN apt-get update && apt-get -y install google-chrome-stable
 
+# Install virtual display support
+RUN apt-get -y install xvfb
+
+
 COPY . .
 
 #  API

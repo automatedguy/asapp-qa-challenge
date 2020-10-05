@@ -4,9 +4,15 @@ import softest
 import os
 from selenium import webdriver
 from sys import platform
+from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
-
 from base.constants import Log
+
+if platform != 'win32':
+    from pyvirtualdisplay import Display
+
+    display = Display(visible=0, size=(800, 600))
+    display.start()
 
 _URLS_INI_ = 'urls.ini'
 _PROTOCOL_ = 'http'
@@ -73,25 +79,19 @@ class BaseUiTest(softest.TestCase):
 
     def _set_chrome(self):
         self.__logger.info(Log.INSTALLING_AND_OPENING_BROWSER)
-        self.__driver = webdriver.Chrome(ChromeDriverManager().install())
+        chrome_options = Options()
+        chrome_options.add_argument('--no-sandbox')
+        self.__driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
 
     def get_driver(self):
         return self.__driver
 
     def setUp(self):
-        self._start_virtual_display()
         self._set_chrome()
         self.__logger.info(Log.MAXIMIZING_WINDOW)
         self.get_driver().maximize_window()
         self.__logger.info(Log.NAVIGATING_TO_BASE_URL + ':' + self.__ui_base_url)
         self.get_driver().get(self.__ui_base_url)
-
-    def _start_virtual_display(self):
-        if platform != 'win32':
-            self.__logger.info(Log.STARTING_VIRTUAL_DISPLAY)
-            from pyvirtualdisplay import Display
-            display = Display(visible=0, size=(800, 600))
-            display.start()
 
     def tearDown(self):
         self.__logger.info(Log.CLOSING_BROWSER)
