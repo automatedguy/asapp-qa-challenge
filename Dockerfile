@@ -18,7 +18,7 @@ RUN apt-get -y install xvfb
 COPY . .
 
 #  API
-RUN python -m unittest /api/tests/auth_tests.py
+CMD python -m unittest /api/tests/auth_tests.py
 
 # UI
 RUN python -m unittest /ui/tests/login_tests.py

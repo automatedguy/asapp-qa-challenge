@@ -41,4 +41,10 @@
 - API suite: python -m unittest api\tests\auth_tests.py
 - UI suite: python -m unittest ui\tests\login_tests.py
 
+### Run test from Docker:
+- Make sure you started qa_auto_challenge_prj-master project (on localhost)
+- cd asapp-qa-challenge
+- Edit urls.ini with you IP address (not localhost)
+- docker pull python
+- 
 
