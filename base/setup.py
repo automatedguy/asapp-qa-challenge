@@ -79,13 +79,14 @@ class BaseUiTest(softest.TestCase):
         return self.__driver
 
     def setUp(self):
+        self._start_virtual_display()
         self._set_chrome()
         self.__logger.info(Log.MAXIMIZING_WINDOW)
         self.get_driver().maximize_window()
         self.__logger.info(Log.NAVIGATING_TO_BASE_URL + ':' + self.__ui_base_url)
         self.get_driver().get(self.__ui_base_url)
 
-    def set_virtual_display(self):
+    def _start_virtual_display(self):
         if platform != 'win32':
             self.__logger.info(Log.STARTING_VIRTUAL_DISPLAY)
             from pyvirtualdisplay import Display
