@@ -11,4 +11,4 @@ COPY . .
 CMD python -m unittest /api/tests/auth_tests.py
 
 # UI
-CMD python -m unittest /ui/tests/login_tests.py
+# CMD python -m unittest /ui/tests/login_tests.py

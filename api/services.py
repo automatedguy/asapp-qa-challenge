@@ -1,5 +1,8 @@
 from api.urls import *
 import requests
+import logging
+
+from base.constants import Msg
 
 
 class Service:
@@ -11,10 +14,15 @@ class Service:
         "Content-Type": "application/json"
     }
 
+    logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
+    logger = logging.getLogger(__name__)
+
     def _get(self, url):
+        self.logger.info(Msg.GET + url)
         return self.__requests.get(url)
 
     def _post(self, url, body):
+        self.logger.info(Msg.POST + url)
         return self.__requests.post(url, data=body, headers=self.__headers)
 
 
