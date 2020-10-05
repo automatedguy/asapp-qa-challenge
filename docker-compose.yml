@@ -1,0 +1,7 @@
+version: '3'
+services:
+  asapp-qa:
+    image: asapp-qa-challenge
+    ports:
+      - "4000:4000"
+    command: python -m unittest ./api/tests/auth_tests.py
