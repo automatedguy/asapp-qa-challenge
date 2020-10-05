@@ -7,4 +7,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD python -m unittest ./api/tests/auth_tests.py
+CMD python -m unittest /api/tests/auth_tests.py
