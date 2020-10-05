@@ -51,7 +51,7 @@ class UiConfig(TestConfig):
 class BaseUiTest(softest.TestCase):
 
     logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
-    logger = logging.getLogger(__name__)
+    __logger = logging.getLogger(__name__)
 
     __ui_base_url = UiConfig().get_ui_base_url()
     __driver = None
@@ -72,9 +72,11 @@ class BaseUiTest(softest.TestCase):
             cls.setUp = setUpOverride
 
     def _set_chrome(self):
-        self.logger.info(Log.INSTALLING_AND_OPENING_BROWSER)
+        self.__logger.info(Log.INSTALLING_AND_OPENING_BROWSER)
         chrome_options = Options()
         chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-gpu")
         self.__driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
 
     def get_driver(self):
@@ -82,11 +84,11 @@ class BaseUiTest(softest.TestCase):
 
     def setUp(self):
         self._set_chrome()
-        self.logger.info(Log.MAXIMIZING_WINDOW)
+        self.__logger.info(Log.MAXIMIZING_WINDOW)
         self.get_driver().maximize_window()
-        self.logger.info(Log.NAVIGATING_TO_BASE_URL + ':' + self.__ui_base_url)
+        self.__logger.info(Log.NAVIGATING_TO_BASE_URL + ':' + self.__ui_base_url)
         self.get_driver().get(self.__ui_base_url)
 
     def tearDown(self):
-        self.logger.info(Log.CLOSING_BROWSER)
+        self.__logger.info(Log.CLOSING_BROWSER)
         self.get_driver().quit()

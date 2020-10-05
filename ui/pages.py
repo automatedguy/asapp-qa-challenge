@@ -27,29 +27,37 @@ class LoginPage(BasePage):
         self.__register_button = PageElement(self.__driver, LoginPageLocators.REGISTER_BUTTON)
 
     def enter_username(self, username):
+        self.__logger.info('Entering username: ' + username)
         self.__username_input.set_text(username)
 
     def is_username_visible(self):
+        self.__logger.info('Checking if username input is visible.')
         return self.__username_input.is_visible()
 
     def enter_password(self, password):
+        self.__logger.info('Entering password: ' + password)
         self.__password_input.set_text(password)
 
     def is_password_visible(self):
+        self.__logger.info('Checking if password input is visible.')
         return self.__password_input.is_visible()
 
     def click_on_log_in_button(self):
+        self.__logger.info('Clicking on login button.')
         self.__login_button.click()
         return AppMainPage(self.__driver)
 
     def is_log_in_button_visible(self):
+        self.__logger.info('Checking if login button is visible.')
         return self.__login_button.is_visible()
 
     def click_on_register_button(self):
+        self.__logger.info('Clicking on register button.')
         self.__register_button.click()
         return RegisterPage(self.__driver)
 
     def is_register_button_visible(self):
+        self.__logger.info('Checking if register button is visible.')
         return self.__register_button.is_visible()
 
 
@@ -63,12 +71,15 @@ class RegisterPage(BasePage):
         self.__register_button = PageElement(self.__driver, RegisterPageLocators.REGISTER_BUTTON)
 
     def enter_username(self, username):
+        self.__logger.info('Entering username: ' + username)
         self.__username_input.set_text(username)
 
     def enter_password(self, password):
+        self.__logger.info('Entering password: ' + password)
         self.__password_input.set_text(password)
 
     def click_on_register_button(self):
+        self.__logger.info('Clicking on register button.')
         self.__register_button.click()
         return LoginPage(self.__driver)
 
